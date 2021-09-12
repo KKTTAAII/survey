@@ -26,13 +26,18 @@ def show_questions(num):
 
     """if the number exceeds the number of the questions, 
     redirect the user to the home page"""
-    if(num >= len(satisfaction_survey.questions)):
+    if(num > len(satisfaction_survey.questions)):
         flash(
             f"""Invalid question number. There are only 
             {len(satisfaction_survey.questions)} 
             questions for this survey"""
             )
         return redirect("/")
+
+    """prevent user from trying to answer the question
+    in wrong order"""
+    if(len(user_responses) != num):
+        return redirect(f"/questions/{len(user_responses)}")
 
     """check if the user has completed all the questions in the survey"""
     if(len(user_responses) == len(satisfaction_survey.questions)):
