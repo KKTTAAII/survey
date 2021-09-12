@@ -1,0 +1,48 @@
+.messages p {
+    padding: 1rem;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.messages .finished {
+    background-color: rgba(0,255,0,0.1);
+}
+
+.messages .error {
+    background-color: rgba(255,0,0,0.1);
+}
+
+.header {
+    color: rgb(15, 15, 15);
+}
+
+.whole_page {
+    background-color: rgba(61, 184, 132, 0.1);
+    font-family: 'Roboto', sans-serif;
+}
+
+.header, .secondheader, .inputContainer, .messages p {
+    text-align: center;
+}
+
+.btn {
+    margin: 0 auto;
+    background-color: #5f5cdd; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.btn:hover {
+    cursor: pointer;
+    background-color: rgb(41, 168, 147);
+}
+
+input[type=button] {
+    font-family: 'Roboto', sans-serif;
+}
+

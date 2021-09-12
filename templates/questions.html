@@ -1,11 +1,22 @@
-{% extends 'base.html' %} {%block title%}Survey{%endblock%} {% block content%}
-<h1>Question</h1>
-<h2>{{question}}</h2>
+{% extends 'base.html' %} {%block title%}Survey Questions{%endblock%} {% block
+content%}
+<h1 class="header">Question</h1>
+<h2 class="secondheader">{{question}}</h2>
 <form action="/answer" , method="POST">
   {%for choice in choices%}
-  <input type="radio" , name="answer" value="{{choice}}"/>{{choice}} {%endfor%}
+  <div class="inputContainer">
+    <input
+      type="radio"
+      ,
+      name="answer"
+      value="{{choice}}"
+      class="input"
+    />{{choice}} {%endfor%} {%if text_box%}
+    <input type="text" , name="answer" />
+    {%endif%}
+  </div>
   <br />
-  <button>Next Question</button>
+  <button class="btn">Next Question</button>
 </form>
 <h3>{{choice}}</h3>
 {% endblock %}

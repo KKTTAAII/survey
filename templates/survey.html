@@ -1,12 +1,7 @@
-{% extends 'base.html' %} 
-{%block title%}Survey{%endblock%} 
-{% block content%}
-<h1>Welcome to the Survey</h1>
-<h2>{{title}}</h2>
-<h2>{{inst}}</h2>
-<form action='/questions/0', method="POST">
-  <button class="startBtn">
-  Start the Survey
-  </button>
+{% extends 'base.html' %} {%block title%}Survey{%endblock%} {% block content%}
+<h2 class="secondheader">{{title}}</h2>
+<h2 class="secondheader">{{inst}}</h2>
+<form action="/questions/0" , method="POST">
+  <button class="btn">Start the Survey</button>
 </form>
 {% endblock %}

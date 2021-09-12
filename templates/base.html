@@ -4,19 +4,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/app.css" />
     <title>{%block title%}{%endblock%}</title>
   </head>
-  <body>
-    <main id="content">
-      {% with messages=get_flashed_messages()%}
+  <body class="whole_page">
+    <main>
+      {% with messages=get_flashed_messages(with_categories=true)%} {% if
+      messages %}
       <section class="messages">
-        {%for msg in messages%}
-        <p>{{msg}}</p>
+        {%for category, msg in messages%}
+        <p class="{{category}}">{{msg}}</p>
         {%endfor%}
       </section>
-      {% block content%} content {% endblock %}
-      {%endwith%}
+      {%endif%} {%endwith%} {% block content%} content {% endblock %}
     </main>
   </body>
 </html>
