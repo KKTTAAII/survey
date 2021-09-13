@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, flash
 from flask.globals import session
+from flask.wrappers import Response
 from flask_debugtoolbar import DebugToolbarExtension
 from surveys import surveys
 
@@ -15,11 +16,13 @@ def select_survey():
     all_surveys = [survey for survey in surveys.keys()]
     return render_template("homepage.html", surveys=all_surveys)
 
+
 @app.route("/session", methods = ["POST"])
 def empty_session():
     session["responses"] = []
     session["current_survey"] = request.form["survey"]
     return redirect('/survey')
+
 
 @app.route("/survey", methods=["GET", "POST"])
 def show_survey():
@@ -30,21 +33,23 @@ def show_survey():
     return render_template("survey.html", title=title, inst=instructions, selected_survey=selected_survey)
 
 
+@app.route("/answer", methods=["POST"])
+def answer():
+    """store answers"""
+    ans = request.form["answer"]
+    # session["responses"].append(ans)
+    responses = session["responses"]
+    responses.append(ans)
+    session["responses"] = responses
+    length = len(session["responses"])
+    return redirect(f"/questions/{length}")
+
+
 @app.route("/questions/<int:num>", methods=["GET", "POST"])
 def show_questions(num):
     """show the question according to the question number"""
 
     responses_length = len(session["responses"])
-
-    question = surveys[session["current_survey"]].questions[int(num)].question
-    choices = surveys[session["current_survey"]].questions[int(num)].choices
-    text_box = surveys[session["current_survey"]].questions[int(num)].allow_text
-
-    if(responses_length == num):
-        return render_template(
-        "questions.html",
-        question=question,
-        choices=choices, text_box=text_box)
 
     """if the number exceeds the number of the questions, 
     redirect the user to the home page"""
@@ -66,18 +71,15 @@ def show_questions(num):
         flash("You have completed all the questions", "finished")
         return redirect('/complete')
 
-
-@app.route("/answer", methods=["POST"])
-def answer():
-    """store answers"""
-    ans = request.form["answer"]
-    session["responses"].append(ans)
-    length = len(session["responses"])
-    print("*********************")
-    print(session["responses"])
-    print(length)
-    print("*********************")
-    return redirect(f"/questions/{length}")
+    question = surveys[session["current_survey"]].questions[int(num)].question
+    choices = surveys[session["current_survey"]].questions[int(num)].choices
+    text_box = surveys[session["current_survey"]].questions[int(num)].allow_text
+    
+    if(responses_length == num):
+        return render_template(
+        "questions.html",
+        question=question,
+        choices=choices, text_box=text_box)
 
 
 @app.route('/complete')
