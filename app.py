@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, redirect, flash
 from flask.globals import session
-from flask.wrappers import Response
 from flask_debugtoolbar import DebugToolbarExtension
 from surveys import surveys
 
@@ -50,7 +49,7 @@ def show_questions(num):
     """show the question according to the question number"""
 
     responses_length = len(session["responses"])
-
+    print(session["responses"])
     """if the number exceeds the number of the questions, 
     redirect the user to the home page"""
     if(num > len(surveys[session["current_survey"]].questions)):
@@ -74,7 +73,7 @@ def show_questions(num):
     question = surveys[session["current_survey"]].questions[int(num)].question
     choices = surveys[session["current_survey"]].questions[int(num)].choices
     text_box = surveys[session["current_survey"]].questions[int(num)].allow_text
-    
+
     if(responses_length == num):
         return render_template(
         "questions.html",
@@ -82,7 +81,7 @@ def show_questions(num):
         choices=choices, text_box=text_box)
 
 
-@app.route('/complete')
+@app.route("/complete")
 def complete():
     """show the complete page once the user finished the survey"""
     return render_template('complete.html')
