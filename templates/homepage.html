@@ -3,7 +3,7 @@ content%}
 <h1 class="header">Welcome to the Survey</h1>
 <h2 class="secondheader">Select a survey</h2>
 <div class="inputContainer">
-  <form action="/survey">
+  <form action="/session", method="POST">
     <label>Surveys:</label>
     <select name="survey">
       {%for surveyname in surveys%}
