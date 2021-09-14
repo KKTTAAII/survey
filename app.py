@@ -49,13 +49,13 @@ def show_questions(num):
     """show the question according to the question number"""
 
     responses_length = len(session["responses"])
-    print(session["responses"])
+    survey = surveys[session["current_survey"]]
     """if the number exceeds the number of the questions, 
     redirect the user to the home page"""
-    if(num > len(surveys[session["current_survey"]].questions)):
+    if(num > len(survey.questions)):
         flash(
             f"""Invalid question number. There are only 
-            {len(surveys[session["current_survey"]].questions)} 
+            {len(survey.questions)} 
             questions for this survey"""
             , "error")
         return redirect("/")
@@ -66,13 +66,13 @@ def show_questions(num):
         return redirect(f"/questions/{responses_length}")
 
     """check if the user has completed all the questions in the survey"""
-    if(responses_length == len(surveys[session["current_survey"]].questions)):
+    if(responses_length == len(survey.questions)):
         flash("You have completed all the questions", "finished")
         return redirect('/complete')
 
-    question = surveys[session["current_survey"]].questions[int(num)].question
-    choices = surveys[session["current_survey"]].questions[int(num)].choices
-    text_box = surveys[session["current_survey"]].questions[int(num)].allow_text
+    question = survey.questions[int(num)].question
+    choices = survey.questions[int(num)].choices
+    text_box = survey.questions[int(num)].allow_text
 
     if(responses_length == num):
         return render_template(

@@ -8,12 +8,12 @@
   <div class="inputContainer">
     <input
       type="radio"
-      ,
-      name="answer"
-      value="{{choice}}"
+      name="answer",
+      value="{{choice}}",
       class="input"
+      required
     />{{choice}} {%endfor%} {%if text_box%}
-    <input type="text" , name="answer" />
+    <input type="text" name="answer" required/>
     {%endif%}
   </div>
   <br />
